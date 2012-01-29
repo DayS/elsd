@@ -25,14 +25,15 @@ public class Main {
 		File[] videos = FolderScanner.findVideosInFolder(folderToScan);
 
 		// Create the processor manager
-		ProcessorManager processorManager = new ProcessorManager(new String[] {"fr"});
+		ProcessorManager processorManager = new ProcessorManager(new String[] { "fr" });
 
 		if (videos == null || videos.length == 0) {
 			LOGGER.warn("No videos found");
 		} else {
-			LOGGER.debug("Found "+videos.length+" videos");
-			
+			LOGGER.info("Found " + videos.length + " videos whithout subtitles");
+
 			for (File video : videos) {
+				LOGGER.debug("Processing video : " + video.getPath());
 				SubtitleResult foundSubtitle = processorManager.searchSubtitle(video);
 				LOGGER.info("Final subtitle : " + foundSubtitle);
 			}
