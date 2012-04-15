@@ -16,7 +16,7 @@ import fr.days.elsd.utils.VideoHasher;
 public class TheSubDBProcessor implements Processor {
 
 	@Override
-	public List<SubtitleResult> searchSubtitle(File video, String[] languages) {
+	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		if (video == null)

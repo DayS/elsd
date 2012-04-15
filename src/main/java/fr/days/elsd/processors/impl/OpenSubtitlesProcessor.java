@@ -44,13 +44,15 @@ public class OpenSubtitlesProcessor implements Processor {
 	}
 
 	@Override
-	public List<SubtitleResult> searchSubtitle(File video, String[] languages) {
-		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
-
-		if (video == null) {
-			LOGGER.error("Video is null");
-			return subtitles;
+	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
+		if (video == null || !video.isFile()) {
+			throw new IllegalArgumentException("You have to specify an existing video file");
 		}
+		if (languages == null || languages.length == 0) {
+			throw new IllegalArgumentException("You have to specify at least one language");
+		}
+
+		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		// Retrieve the video hash
 		String videoHash = null;

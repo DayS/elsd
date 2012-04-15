@@ -14,22 +14,14 @@ import fr.days.elsd.model.SubtitleResult;
  * @author dvilleneuve
  * 
  */
-public class BestRateSelector implements Selector {
+public class FirstSelector implements Selector {
 
+	@Override
 	public SubtitleResult selectOne(List<SubtitleResult> subtitleResults) {
 		if (subtitleResults != null && subtitleResults.size() > 0) {
-			SubtitleResult bestResult = subtitleResults.get(0);
-
-			SubtitleResult subtitleResult;
-			for (int i = 1; i < subtitleResults.size(); i++) {
-				subtitleResult = subtitleResults.get(i);
-				if (subtitleResult.getSubRating() > bestResult.getSubRating()) {
-					bestResult = subtitleResult;
-				}
-			}
-			return bestResult;
+			return subtitleResults.get(0);
 		}
 		return null;
 	}
-	
+
 }

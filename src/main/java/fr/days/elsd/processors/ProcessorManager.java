@@ -20,7 +20,7 @@ public class ProcessorManager {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ProcessorManager.class);
 
 	private final List<Processor> processors = new ArrayList<Processor>();
-	private Selector selector;
+	private Selector subtitleSelector;
 	private String[] languages;
 
 	public ProcessorManager(String... languages) {
@@ -28,6 +28,16 @@ public class ProcessorManager {
 	}
 
 	public SubtitleResult searchSubtitle(File video) {
+		if (processors.size() == 0) {
+			throw new IllegalArgumentException("You have to specify at least one processor");
+		}
+		if (subtitleSelector == null) {
+			throw new IllegalArgumentException("You have to specify a subtitle selector");
+		}
+		if (video == null || !video.isFile()) {
+			throw new IllegalArgumentException("You have to specify an existing video file");
+		}
+
 		LOGGER.info("===============================================");
 		LOGGER.info("Search subtitle for video : " + video.getAbsolutePath());
 
@@ -35,18 +45,19 @@ public class ProcessorManager {
 
 		// Search subtitles with every processors
 		for (Processor processor : processors) {
-			LOGGER.debug("# Using " + processor.getClass().getSimpleName());
-			subtitles.addAll(processor.searchSubtitle(video, languages));
+			List<SubtitleResult> searchSubtitles = processor.searchSubtitles(video, languages);;
+			subtitles.addAll(searchSubtitles);
+			LOGGER.debug("# Using {} : {} subtitle(s)", processor.getClass().getSimpleName(), searchSubtitles.size());
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Found " + subtitles.size() + " subtitle(s)");
+			LOGGER.debug("Found {} subtitle(s)", subtitles.size());
 			for (SubtitleResult subtitle : subtitles) {
 				LOGGER.debug(" * " + subtitle);
 			}
 		}
 
-		return selector.selectOne(subtitles);
+		return subtitleSelector.selectOne(subtitles);
 	}
 
 	public List<Processor> getProcessors() {
@@ -57,12 +68,12 @@ public class ProcessorManager {
 		processors.add(processor);
 	}
 
-	public Selector getSelector() {
-		return selector;
+	public Selector getSubtitleSelector() {
+		return subtitleSelector;
 	}
 
-	public void setSubtitleSelector(Selector selector) {
-		this.selector = selector;
+	public void setSubtitleSelector(Selector subtitleSelector) {
+		this.subtitleSelector = subtitleSelector;
 	}
 
 	public String[] getLanguages() {

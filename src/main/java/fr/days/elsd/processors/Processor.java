@@ -14,6 +14,6 @@ public interface Processor {
 	 * @param video
 	 * @return
 	 */
-	List<SubtitleResult> searchSubtitle(File video, String[] languages);
+	List<SubtitleResult> searchSubtitles(File video, String[] languages);
 
 }
