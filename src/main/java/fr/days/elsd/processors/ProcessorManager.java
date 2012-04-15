@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.SubtitleResult;
 import fr.days.elsd.selector.Selector;
@@ -16,7 +17,7 @@ import fr.days.elsd.selector.Selector;
  * 
  */
 public class ProcessorManager {
-	private final static Logger LOGGER = Logger.getLogger(ProcessorManager.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ProcessorManager.class);
 
 	private final List<Processor> processors = new ArrayList<Processor>();
 	private Selector selector;

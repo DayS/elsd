@@ -5,16 +5,16 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.regex.Matcher;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import fr.days.elsd.extractors.TVShowMetadatasExtractor;
 import fr.days.elsd.processors.ProcessorManager;
 
 public class FileMetadatasExtractorTest {
-	private final static Logger LOGGER = Logger.getLogger(ProcessorManager.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ProcessorManager.class);
 
 	private static final String[] TVSHOW_FILENAMES_DEFAULTS = new String[] { "foo.s06e01.*", "foo.s06.e01.*",
 			"foo.s06_e01.*", "foo_[s06]_[e01]_*", "foo.6x01.*", "06-01 - *", "foo.601.*" };

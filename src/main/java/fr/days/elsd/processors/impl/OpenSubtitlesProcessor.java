@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.SubtitleResult;
 import fr.days.elsd.processors.Processor;
@@ -20,7 +21,7 @@ import fr.days.elsd.utils.VideoHasher;
 
 public class OpenSubtitlesProcessor implements Processor {
 
-	private final static Logger LOGGER = Logger.getLogger(OpenSubtitlesProcessor.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(OpenSubtitlesProcessor.class);
 	private final static String FIELD_DATA = "data";
 	private final static String USER_AGENT = "OS Test User Agent";
 	private final static long LOGIN_TICKET_TIME_OUT = 900000;

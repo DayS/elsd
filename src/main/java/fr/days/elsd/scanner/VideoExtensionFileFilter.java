@@ -3,26 +3,26 @@ package fr.days.elsd.scanner;
 import java.io.File;
 import java.io.FileFilter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * A filter for video files based on the filename extension. It's possible to
- * filter video whith or without associated subtitles. A subtitle is associated
- * with a video if the basename (filename without extension) is the same as the
+ * A filter for video files based on the filename extension. It's possible to filter video whith or without associated
+ * subtitles. A subtitle is associated with a video if the basename (filename without extension) is the same as the
  * video. A subtitle has a '.srt' extension.
  * </p>
  * 
  * <p>
  * Instances of this interface may be passed to the <code>{@link
- * File#listFiles(java.io.FileFilter) listFiles(FileFilter)}</code> method of
- * the <code>{@link java.io.File}</code> class.
+ * File#listFiles(java.io.FileFilter) listFiles(FileFilter)}</code> method of the <code>{@link java.io.File}</code>
+ * class.
  * 
  * @author dvilleneuve
  * 
  */
 public class VideoExtensionFileFilter implements FileFilter {
-	private final static Logger LOGGER = Logger.getLogger(VideoExtensionFileFilter.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(VideoExtensionFileFilter.class);
 
 	public static String SUBTITLE_EXTENSIONS = "srt";
 	public static String[] VALID_EXTENSIONS = new String[] { "3g2", "3gp", "3gp2", "3gpp", "60d", "ajp", "asf", "asx",
@@ -70,8 +70,7 @@ public class VideoExtensionFileFilter implements FileFilter {
 	 * This method is looking for a subtitle according to a video.
 	 * 
 	 * @param videoFile
-	 * @return a file instance representing the subitle, or <code>null</code> if
-	 *         no subtitle was found.
+	 * @return a file instance representing the subitle, or <code>null</code> if no subtitle was found.
 	 */
 	private File getSubtitleForVideo(File videoFile) {
 		if (videoFile == null)

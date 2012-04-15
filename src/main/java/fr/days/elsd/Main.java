@@ -2,7 +2,8 @@ package fr.days.elsd;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.SubtitleResult;
 import fr.days.elsd.processors.ProcessorManager;
@@ -12,7 +13,7 @@ import fr.days.elsd.scanner.FolderScanner;
 import fr.days.elsd.selector.BestRateSelector;
 
 public class Main {
-	private final static Logger LOGGER = Logger.getLogger(Main.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
 	/**
 	 * @param args

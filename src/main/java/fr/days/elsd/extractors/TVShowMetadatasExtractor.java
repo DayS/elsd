@@ -3,13 +3,14 @@ package fr.days.elsd.extractors;
 import java.io.File;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.metadatas.TVShowMetadatas;
 
 public class TVShowMetadatasExtractor {
 
-	private final static Logger LOGGER = Logger.getLogger(TVShowMetadatasExtractor.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(TVShowMetadatasExtractor.class);
 
 	protected static Pattern filenameSeasonEpisodePattern = Pattern
 			.compile("[sS]?0?([1-2][0-9]|[1-9])[\\[\\]_.-]{0,4}[eExX_.-]?0?(\\d{1,2})");
