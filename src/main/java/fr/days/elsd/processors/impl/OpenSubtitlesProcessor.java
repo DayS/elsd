@@ -15,10 +15,11 @@ import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.processors.AbstractProcessor;
+import fr.days.elsd.processors.Processor;
 import fr.days.elsd.utils.VideoHasher;
 
-public class OpenSubtitlesProcessor extends AbstractProcessor {
+public class OpenSubtitlesProcessor implements Processor {
+
 	private final static Logger LOGGER = Logger.getLogger(OpenSubtitlesProcessor.class);
 	private final static String FIELD_DATA = "data";
 	private final static String USER_AGENT = "OS Test User Agent";
@@ -28,9 +29,7 @@ public class OpenSubtitlesProcessor extends AbstractProcessor {
 	private String loginTicket;
 	private Long lastCall;
 
-	public OpenSubtitlesProcessor(String... languages) {
-		super(languages);
-
+	public OpenSubtitlesProcessor() {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		try {
 			config.setServerURL(new URL("http://api.opensubtitles.org/xml-rpc"));
@@ -44,7 +43,7 @@ public class OpenSubtitlesProcessor extends AbstractProcessor {
 	}
 
 	@Override
-	public List<SubtitleResult> searchSubtitle(File video) {
+	public List<SubtitleResult> searchSubtitle(File video, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		if (video == null) {
@@ -157,4 +156,5 @@ public class OpenSubtitlesProcessor extends AbstractProcessor {
 		}
 		return languagesString.toString();
 	}
+
 }

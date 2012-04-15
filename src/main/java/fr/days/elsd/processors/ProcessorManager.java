@@ -7,8 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.processors.impl.OpenSubtitlesProcessor;
-import fr.days.elsd.processors.impl.TheSubDBProcessor;
+import fr.days.elsd.selector.Selector;
 
 /**
  * this class manage the different processors.
@@ -19,13 +18,12 @@ import fr.days.elsd.processors.impl.TheSubDBProcessor;
 public class ProcessorManager {
 	private final static Logger LOGGER = Logger.getLogger(ProcessorManager.class);
 
-	private List<AbstractProcessor> processors;
+	private final List<Processor> processors = new ArrayList<Processor>();
+	private Selector selector;
+	private String[] languages;
 
 	public ProcessorManager(String... languages) {
-		processors = new ArrayList<AbstractProcessor>();
-
-		processors.add(new OpenSubtitlesProcessor(languages));
-		processors.add(new TheSubDBProcessor(languages));
+		this.languages = languages;
 	}
 
 	public SubtitleResult searchSubtitle(File video) {
@@ -35,9 +33,9 @@ public class ProcessorManager {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		// Search subtitles with every processors
-		for (AbstractProcessor processor : processors) {
+		for (Processor processor : processors) {
 			LOGGER.debug("# Using " + processor.getClass().getSimpleName());
-			subtitles.addAll(processor.searchSubtitle(video));
+			subtitles.addAll(processor.searchSubtitle(video, languages));
 		}
 
 		if (LOGGER.isDebugEnabled()) {
@@ -47,11 +45,31 @@ public class ProcessorManager {
 			}
 		}
 
-		// Return the first subtitle
-		// TODO : Search the best one
-		if (subtitles.size() > 0) {
-			return subtitles.get(0);
-		}
-		return null;
+		return selector.selectOne(subtitles);
 	}
+
+	public List<Processor> getProcessors() {
+		return processors;
+	}
+
+	public void addProcessor(Processor processor) {
+		processors.add(processor);
+	}
+
+	public Selector getSelector() {
+		return selector;
+	}
+
+	public void setSubtitleSelector(Selector selector) {
+		this.selector = selector;
+	}
+
+	public String[] getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(String[] languages) {
+		this.languages = languages;
+	}
+
 }

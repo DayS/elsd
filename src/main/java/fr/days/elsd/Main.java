@@ -6,7 +6,10 @@ import org.apache.log4j.Logger;
 
 import fr.days.elsd.model.SubtitleResult;
 import fr.days.elsd.processors.ProcessorManager;
+import fr.days.elsd.processors.impl.OpenSubtitlesProcessor;
+import fr.days.elsd.processors.impl.TheSubDBProcessor;
 import fr.days.elsd.scanner.FolderScanner;
+import fr.days.elsd.selector.BestRateSelector;
 
 public class Main {
 	private final static Logger LOGGER = Logger.getLogger(Main.class);
@@ -26,6 +29,11 @@ public class Main {
 
 		// Create the processor manager
 		ProcessorManager processorManager = new ProcessorManager(new String[] { "fr" });
+
+		processorManager.setSubtitleSelector(new BestRateSelector());
+
+		processorManager.addProcessor(new OpenSubtitlesProcessor());
+		processorManager.addProcessor(new TheSubDBProcessor());
 
 		if (videos == null || videos.length == 0) {
 			LOGGER.warn("No videos found");

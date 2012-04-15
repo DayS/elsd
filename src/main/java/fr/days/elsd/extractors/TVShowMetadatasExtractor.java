@@ -8,8 +8,9 @@ import org.apache.log4j.Logger;
 import fr.days.elsd.model.metadatas.TVShowMetadatas;
 
 public class TVShowMetadatasExtractor {
+
 	private final static Logger LOGGER = Logger.getLogger(TVShowMetadatasExtractor.class);
-	
+
 	protected static Pattern filenameSeasonEpisodePattern = Pattern
 			.compile("[sS]?0?([1-2][0-9]|[1-9])[\\[\\]_.-]{0,4}[eExX_.-]?0?(\\d{1,2})");
 
@@ -20,9 +21,7 @@ public class TVShowMetadatasExtractor {
 		TVShowMetadatas fileMetadatas = extractMetadatasFromFileName(video);
 
 		TVShowMetadatas metadatas = new TVShowMetadatas(video);
-		
-		
-		
+
 		return metadatas;
 	}
 
@@ -53,4 +52,5 @@ public class TVShowMetadatasExtractor {
 
 		return metaDatas;
 	}
+
 }

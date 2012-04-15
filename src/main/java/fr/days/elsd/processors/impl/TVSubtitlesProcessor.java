@@ -1,7 +1,6 @@
 package fr.days.elsd.processors.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,18 +9,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.model.metadatas.TVShowMetadatas;
-import fr.days.elsd.processors.AbstractProcessor;
-import fr.days.elsd.utils.VideoHasher;
+import fr.days.elsd.processors.Processor;
 
-public class TVSubtitlesProcessor extends AbstractProcessor {
-
-	public TVSubtitlesProcessor(String... languages) {
-		super(languages);
-	}
+public class TVSubtitlesProcessor implements Processor {
 
 	@Override
-	public List<SubtitleResult> searchSubtitle(File video) {
+	public List<SubtitleResult> searchSubtitle(File video, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		if (video == null)

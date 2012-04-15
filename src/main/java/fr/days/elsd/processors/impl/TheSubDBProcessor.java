@@ -10,19 +10,15 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.processors.AbstractProcessor;
+import fr.days.elsd.processors.Processor;
 import fr.days.elsd.utils.VideoHasher;
 
-public class TheSubDBProcessor extends AbstractProcessor {
-	
-	public TheSubDBProcessor(String[] languages) {
-		super(languages);
-	}
+public class TheSubDBProcessor implements Processor {
 
 	@Override
-	public List<SubtitleResult> searchSubtitle(File video) {
+	public List<SubtitleResult> searchSubtitle(File video, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
-		
+
 		if (video == null)
 			return subtitles;
 
@@ -49,7 +45,7 @@ public class TheSubDBProcessor extends AbstractProcessor {
 
 			System.out.println("Output from Server .... \n");
 			String output = response.getEntity(String.class);
-//			System.out.println(output);
+			// System.out.println(output);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
