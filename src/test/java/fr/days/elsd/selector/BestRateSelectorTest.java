@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.selector.BestRateSelector;
+import fr.days.elsd.processors.Processor;
 
 /**
  * @author dvilleneuve
@@ -31,12 +31,15 @@ public class BestRateSelectorTest extends SelectorTest {
 	public void selectOne_DifferentElements() {
 		ArrayList<SubtitleResult> list = new ArrayList<SubtitleResult>();
 
-		SubtitleResult subtitleResult1 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654", 5.0f);
-		SubtitleResult subtitleResult2 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7655", 6.0f);
-		SubtitleResult subtitleResult3 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7656", 10.0f);
+		SubtitleResult subtitleResult1 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7654", 5.0f);
+		SubtitleResult subtitleResult2 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7655", 6.0f);
+		SubtitleResult subtitleResult3 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7656", 10.0f);
 		list.add(subtitleResult1);
 		list.add(subtitleResult2);
 		list.add(subtitleResult3);
@@ -49,12 +52,15 @@ public class BestRateSelectorTest extends SelectorTest {
 	public void selectOne_MultipleSameRate() {
 		ArrayList<SubtitleResult> list = new ArrayList<SubtitleResult>();
 
-		SubtitleResult subtitleResult1 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654", 5.0f);
-		SubtitleResult subtitleResult2 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7655", 6.0f);
-		SubtitleResult subtitleResult3 = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7656", 6.0f);
+		SubtitleResult subtitleResult1 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7654", 5.0f);
+		SubtitleResult subtitleResult2 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7655", 6.0f);
+		SubtitleResult subtitleResult3 = new SubtitleResult(Processor.class, "1234",
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", 1, 4,
+				"http://localhost/dl.zip", "ZIP", "sub-7656", 6.0f);
 		list.add(subtitleResult1);
 		list.add(subtitleResult2);
 		list.add(subtitleResult3);

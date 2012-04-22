@@ -1,9 +1,12 @@
 package fr.days.elsd.model;
 
+import fr.days.elsd.processors.Processor;
+
 public class SubtitleResult {
-	private final String processor;
+	private final Class<? extends Processor> processor;
 	private final String imdbId;
 	private final String hash;
+	private final String filename;
 	private final String name;
 	private final int season;
 	private final int episode;
@@ -12,12 +15,13 @@ public class SubtitleResult {
 	private final String subLanguageID;
 	private final float subRating;
 
-	public SubtitleResult(String processor, String imdbId, String hash, String name, int season, int episode, String url, String urlType,
-			String subLanguageID, float subRating) {
+	public SubtitleResult(Class<? extends Processor> processor, String imdbId, String hash, String filename,
+			String name, int season, int episode, String url, String urlType, String subLanguageID, float subRating) {
 		super();
 		this.processor = processor;
 		this.imdbId = imdbId;
 		this.hash = hash;
+		this.filename = filename;
 		this.name = name;
 		this.season = season;
 		this.episode = episode;
@@ -29,16 +33,17 @@ public class SubtitleResult {
 
 	@Override
 	public String toString() {
-		return "SubtitleResult [processor=" + processor + ", imdbId=" + imdbId + ", hash=" + hash + ", name=" + name
-				+ ", season=" + season + ", episode=" + episode + ", url=" + url + ", urlType=" + urlType
-				+ ", subLanguageID=" + subLanguageID + ", subRating=" + subRating + "]";
+		return "SubtitleResult [processor=" + processor + ", imdbId=" + imdbId + ", hash=" + hash + ", filename="
+				+ filename + ", name=" + name + ", season=" + season + ", episode=" + episode + ", url=" + url
+				+ ", urlType=" + urlType + ", subLanguageID=" + subLanguageID + ", subRating=" + subRating + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + episode;
+		result = prime * result + ((filename == null) ? 0 : filename.hashCode());
 		result = prime * result + ((hash == null) ? 0 : hash.hashCode());
 		result = prime * result + ((imdbId == null) ? 0 : imdbId.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -61,6 +66,11 @@ public class SubtitleResult {
 			return false;
 		SubtitleResult other = (SubtitleResult) obj;
 		if (episode != other.episode)
+			return false;
+		if (filename == null) {
+			if (other.filename != null)
+				return false;
+		} else if (!filename.equals(other.filename))
 			return false;
 		if (hash == null) {
 			if (other.hash != null)
@@ -103,8 +113,8 @@ public class SubtitleResult {
 			return false;
 		return true;
 	}
-	
-	public String getProcessor() {
+
+	public Class<? extends Processor> getProcessor() {
 		return processor;
 	}
 
@@ -114,6 +124,10 @@ public class SubtitleResult {
 
 	public String getHash() {
 		return hash;
+	}
+
+	public String getFilename() {
+		return filename;
 	}
 
 	public String getName() {

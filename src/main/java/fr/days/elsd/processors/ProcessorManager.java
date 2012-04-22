@@ -38,20 +38,19 @@ public class ProcessorManager {
 			throw new IllegalArgumentException("You have to specify an existing video file");
 		}
 
-		LOGGER.info("===============================================");
 		LOGGER.info("Search subtitle for video : " + video.getAbsolutePath());
 
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		// Search subtitles with every processors
 		for (Processor processor : processors) {
-			List<SubtitleResult> searchSubtitles = processor.searchSubtitles(video, languages);;
+			LOGGER.info("# Using {}", processor.getClass().getSimpleName());
+			List<SubtitleResult> searchSubtitles = processor.searchSubtitles(video, languages);
 			subtitles.addAll(searchSubtitles);
-			LOGGER.debug("# Using {} : {} subtitle(s)", processor.getClass().getSimpleName(), searchSubtitles.size());
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Found {} subtitle(s)", subtitles.size());
+			LOGGER.info("Found {} subtitle(s)", subtitles.size());
 			for (SubtitleResult subtitle : subtitles) {
 				LOGGER.debug(" * " + subtitle);
 			}

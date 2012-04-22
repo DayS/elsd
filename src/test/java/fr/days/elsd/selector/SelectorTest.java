@@ -13,7 +13,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.selector.Selector;
+import fr.days.elsd.processors.Processor;
 
 /**
  * @author dvilleneuve
@@ -39,8 +39,9 @@ public abstract class SelectorTest {
 	public void selectOne_OneElement() {
 		ArrayList<SubtitleResult> list = new ArrayList<SubtitleResult>();
 
-		SubtitleResult subtitleResult = new SubtitleResult("Processor", "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654", 10.0f);
+		SubtitleResult subtitleResult = new SubtitleResult(Processor.class, "1234", "7c0100307de11000002078031000c00d",
+				"Falling Skies - s01e04.srt", "Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654",
+				10.0f);
 		list.add(subtitleResult);
 
 		SubtitleResult selectedSubtitle = selector.selectOne(list);

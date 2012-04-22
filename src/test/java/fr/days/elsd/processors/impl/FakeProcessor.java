@@ -23,10 +23,14 @@ public class FakeProcessor implements Processor {
 	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
-		subtitles.add(new SubtitleResult("FakeProcessor", "12345", "7c0100307de11000002078031000c00d", "Falling Skies",
-				1, 4, "http://localhost/dl.zip", "ZIP", "sub-1234", 5.0f));
-		subtitles.add(new SubtitleResult("FakeProcessor", "12345", "7c0100307de11000002078031000c00d", "Falling Skies",
-				1, 4, "http://localhost/dl.zip", "ZIP", "sub-1235", 7.0f));
+		subtitles
+				.add(new SubtitleResult(FakeProcessor.class, "12345", "7c0100307de11000002078031000c00d",
+						"Falling Skies - s01e04.srt", "Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP",
+						"sub-1234", 5.0f));
+		subtitles
+				.add(new SubtitleResult(FakeProcessor.class, "12345", "7c0100307de11000002078031000c00d",
+						"Falling Skies - s01e04.srt", "Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP",
+						"sub-1235", 7.0f));
 
 		return subtitles;
 	}

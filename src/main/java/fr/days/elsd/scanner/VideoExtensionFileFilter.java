@@ -44,19 +44,19 @@ public class VideoExtensionFileFilter implements FileFilter {
 			return false;
 		if (!videoFile.isFile())
 			return false;
-
-		int extensionIndex = videoFile.getName().lastIndexOf('.');
+		
+		String videoName = videoFile.getName();
+		int extensionIndex = videoName.lastIndexOf('.');
 		if (extensionIndex == -1)
 			return false;
 
-		String videoName = videoFile.getName();
 		String extension = videoName.substring(extensionIndex + 1, videoName.length());
 		for (String validExtension : VALID_EXTENSIONS) {
 			if (extension.equalsIgnoreCase(validExtension)) {
 				if (withoutSubtitle) {
 					File subtitleFile = getSubtitleForVideo(videoFile);
 					if (subtitleFile != null) {
-						LOGGER.debug(videoName + " has already a subtitle file... Skipped");
+						LOGGER.trace(videoName + " has already a subtitle file... Skipped");
 						return false;
 					}
 				}
@@ -75,7 +75,6 @@ public class VideoExtensionFileFilter implements FileFilter {
 	private File getSubtitleForVideo(File videoFile) {
 		if (videoFile == null)
 			return null;
-
 		if (!videoFile.isFile())
 			return null;
 
