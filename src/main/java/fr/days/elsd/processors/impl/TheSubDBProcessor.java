@@ -12,6 +12,8 @@ import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,12 @@ import fr.days.elsd.processors.Processor;
 public class TheSubDBProcessor implements Processor {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TheSubDBProcessor.class);
+
+	private final Client client;
+
+	public TheSubDBProcessor() {
+		client = Client.create();
+	}
 
 	@Override
 	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
@@ -47,9 +55,9 @@ public class TheSubDBProcessor implements Processor {
 		try {
 			LOGGER.debug("Video hash = " + videoHash);
 
-			Client client = Client.create();
-			WebResource webResource = client.resource("http://api.thesubdb.com/?action=search&hash=" + videoHash);
-			ClientResponse response = webResource.type("application/json").get(ClientResponse.class);
+			WebResource webResource = client.resource("http://sandbox.thesubdb.com/?action=search&hash=" + videoHash);
+			webResource.header("user-agent", "SubDB/1.0 (Thot/0.1; http://github.com/jrhames/pyrrot-cli)");
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
 			if (response.getStatus() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());

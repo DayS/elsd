@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.SubtitleResult;
+import fr.days.elsd.selector.BestRateSelector;
 import fr.days.elsd.selector.Selector;
 
 /**
@@ -20,7 +21,7 @@ public class ProcessorManager {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ProcessorManager.class);
 
 	private final List<Processor> processors = new ArrayList<Processor>();
-	private Selector subtitleSelector;
+	private Selector subtitleSelector = new BestRateSelector();
 	private String[] languages;
 
 	public ProcessorManager(String... languages) {
@@ -37,8 +38,6 @@ public class ProcessorManager {
 		if (video == null || !video.isFile()) {
 			throw new IllegalArgumentException("You have to specify an existing video file");
 		}
-
-		LOGGER.info("Search subtitle for video : " + video.getAbsolutePath());
 
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 

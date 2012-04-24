@@ -147,8 +147,6 @@ public class OpenSubtitlesProcessor implements Processor {
 			} else {
 				LOGGER.error("Can't parse result into Array : " + data);
 			}
-		} else {
-			LOGGER.warn("No subtitle found");
 		}
 		return null;
 	}
