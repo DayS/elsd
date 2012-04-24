@@ -64,16 +64,21 @@ public class OpenSubtitlesProcessor implements Processor {
 		String videoHash = null;
 		try {
 			videoHash = VideoHasher.computeHash(video);
+			if (videoHash == null || videoHash.length() == 0) {
+				LOGGER.error("The computed hash is invalid");
+				return subtitles;
+			}
+			LOGGER.debug("Video hash = " + videoHash);
 		} catch (IOException e1) {
 			LOGGER.error("Hash can't be computed : ", e1);
 		}
 
-		if (videoHash == null || videoHash.length() == 0) {
-			LOGGER.error("The computed hash is invalid");
+		// Retrieve the login ticket
+		String loginTicket = getLoginTicket();
+		if (loginTicket == null) {
 			return subtitles;
 		}
-		LOGGER.debug("Video hash = " + videoHash);
-
+		
 		String languagesString = makeLanguageString(languages);
 		String basename = FilenameUtils.getBaseName(video.getName());
 
@@ -83,16 +88,16 @@ public class OpenSubtitlesProcessor implements Processor {
 		paramsHash.put("moviebytesize", String.valueOf(video.length()));
 		paramsHash.put("moviehash", videoHash);
 
+		Map<String, String> paramsQuery = new HashMap<String, String>();
+		paramsQuery.put("sublanguageid", languagesString);
+		paramsQuery.put("query", basename);
+
 		// Extract imdb from .NFO
 		// /imdb\.[^\/]+\/title\/tt(\d+)/i
 		// Map<String, String> paramsIMDB = new HashMap<String, String>();
 		// paramsIMDB.put("imdbid", imdbId);
 
-		Map<String, String> paramsQuery = new HashMap<String, String>();
-		paramsQuery.put("sublanguageid", languagesString);
-		paramsQuery.put("query", basename);
-
-		Object[] datas = new Object[] { getLoginTicket(), new Object[] { paramsHash }, new Object[] { paramsQuery } };
+		Object[] datas = new Object[] { loginTicket, new Object[] { paramsHash }, new Object[] { paramsQuery } };
 		Object[] results = callRPCToArray("SearchSubtitles", datas);
 
 		if (results != null) {
