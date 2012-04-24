@@ -105,6 +105,7 @@ public class Elsd {
 			e.printStackTrace();
 		}
 
+		LOGGER.info("Elsd configuration :");
 		LOGGER.info("* Searching languages : {}", (Object) processorManager.getLanguages());
 		LOGGER.info("* Subtitle selector : {}", processorManager.getSubtitleSelector().getClass().getSimpleName());
 		LOGGER.info("* Files to process : {}", (Object) filesToProcess);

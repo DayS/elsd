@@ -40,8 +40,8 @@ public abstract class SelectorTest {
 		ArrayList<SubtitleResult> list = new ArrayList<SubtitleResult>();
 
 		SubtitleResult subtitleResult = new SubtitleResult(Processor.class, "1234", "7c0100307de11000002078031000c00d",
-				"Falling Skies - s01e04.srt", "Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654",
-				10.0f);
+				"Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4, "http://localhost/dl.zip", "ZIP",
+				"sub-7654", 10.0f);
 		list.add(subtitleResult);
 
 		SubtitleResult selectedSubtitle = selector.selectOne(list);

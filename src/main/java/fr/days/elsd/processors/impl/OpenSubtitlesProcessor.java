@@ -78,7 +78,7 @@ public class OpenSubtitlesProcessor implements Processor {
 		if (loginTicket == null) {
 			return subtitles;
 		}
-		
+
 		String languagesString = makeLanguageString(languages);
 		String basename = FilenameUtils.getBaseName(video.getName());
 
@@ -109,14 +109,15 @@ public class OpenSubtitlesProcessor implements Processor {
 				String imdbId = (String) resultCast.get("IDMovieImdb");
 				String hash = (String) resultCast.get("MovieHash");
 				String name = (String) resultCast.get("MovieName");
+				String language = (String)resultCast.get("SubLanguageID");
 				int season = Integer.valueOf((String) resultCast.get("SeriesSeason"));
 				int episode = Integer.valueOf((String) resultCast.get("SeriesEpisode"));
 				String link = (String) resultCast.get("SubDownloadLink");
 				float subRating = Float.valueOf((String) resultCast.get("SubRating"));
 				String subLanguageID = (String) resultCast.get("SubLanguageID");
 
-				SubtitleResult subtitle = new SubtitleResult(getClass(), imdbId, hash, subtitleFileName, name, season,
-						episode, link, "ZIP", subLanguageID, subRating);
+				SubtitleResult subtitle = new SubtitleResult(getClass(), imdbId, hash, subtitleFileName, name,
+						language, season, episode, link, "ZIP", subLanguageID, subRating);
 				subtitles.add(subtitle);
 			}
 		}

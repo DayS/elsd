@@ -24,8 +24,8 @@ public class FakeProcessorBestResult implements Processor {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		subtitles.add(new SubtitleResult(FakeProcessorBestResult.class, "12345", "7c0100307de11000002078031000c00d",
-				"Falling Skies - s01e04.srt", "Falling Skies", 1, 4, "http://localhost/dl.zip", "ZIP", "sub-7654",
-				10.0f));
+				"Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4, "http://localhost/dl.zip", "ZIP",
+				"sub-7654", 10.0f));
 
 		return subtitles;
 	}

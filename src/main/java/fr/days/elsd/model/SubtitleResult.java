@@ -8,6 +8,7 @@ public class SubtitleResult {
 	private final String hash;
 	private final String filename;
 	private final String name;
+	private final String language;
 	private final int season;
 	private final int episode;
 	private final String url;
@@ -16,13 +17,15 @@ public class SubtitleResult {
 	private final float subRating;
 
 	public SubtitleResult(Class<? extends Processor> processor, String imdbId, String hash, String filename,
-			String name, int season, int episode, String url, String urlType, String subLanguageID, float subRating) {
+			String name, String language, int season, int episode, String url, String urlType, String subLanguageID,
+			float subRating) {
 		super();
 		this.processor = processor;
 		this.imdbId = imdbId;
 		this.hash = hash;
 		this.filename = filename;
 		this.name = name;
+		this.language = language;
 		this.season = season;
 		this.episode = episode;
 		this.url = url;
@@ -34,8 +37,9 @@ public class SubtitleResult {
 	@Override
 	public String toString() {
 		return "SubtitleResult [processor=" + processor + ", imdbId=" + imdbId + ", hash=" + hash + ", filename="
-				+ filename + ", name=" + name + ", season=" + season + ", episode=" + episode + ", url=" + url
-				+ ", urlType=" + urlType + ", subLanguageID=" + subLanguageID + ", subRating=" + subRating + "]";
+				+ filename + ", name=" + name + ", language=" + language + ", season=" + season + ", episode="
+				+ episode + ", url=" + url + ", urlType=" + urlType + ", subLanguageID=" + subLanguageID
+				+ ", subRating=" + subRating + "]";
 	}
 
 	@Override
@@ -46,6 +50,7 @@ public class SubtitleResult {
 		result = prime * result + ((filename == null) ? 0 : filename.hashCode());
 		result = prime * result + ((hash == null) ? 0 : hash.hashCode());
 		result = prime * result + ((imdbId == null) ? 0 : imdbId.hashCode());
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((processor == null) ? 0 : processor.hashCode());
 		result = prime * result + season;
@@ -81,6 +86,11 @@ public class SubtitleResult {
 			if (other.imdbId != null)
 				return false;
 		} else if (!imdbId.equals(other.imdbId))
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		} else if (!language.equals(other.language))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -132,6 +142,10 @@ public class SubtitleResult {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getLanguage() {
+		return language;
 	}
 
 	public int getSeason() {
