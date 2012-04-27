@@ -30,7 +30,7 @@ public class ProcessorManagerTest {
 	private static File video;
 
 	public ProcessorManagerTest() {
-		processorManager = new ProcessorManager("fr");
+		processorManager = new ProcessorManager("fre");
 		processorManager.addProcessor(new FakeProcessor());
 		processorManager.addProcessor(new FakeProcessorNoResults());
 		processorManager.addProcessor(new FakeProcessorBestResult());
@@ -41,14 +41,7 @@ public class ProcessorManagerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void searchWithoutProcessorsTest() {
-		ProcessorManager illegalProcessorManager = new ProcessorManager("fr");
-		illegalProcessorManager.searchSubtitle(video);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void searchWithoutSelectorTest() {
-		ProcessorManager illegalProcessorManager = new ProcessorManager("fr");
-		illegalProcessorManager.addProcessor(new FakeProcessor());
+		ProcessorManager illegalProcessorManager = new ProcessorManager("fre");
 		illegalProcessorManager.searchSubtitle(video);
 	}
 

@@ -11,12 +11,32 @@ import java.util.List;
 import fr.days.elsd.model.SubtitleResult;
 
 /**
- * @author dvilleneuve
+ * <pre>
+ * Requested : spa, fre
+ * Response : {
+ * 	[fre, 0]
+ * 	[spa, 0] *
+ * 	[spa, 0]
+ * }
+ * Response : {
+ * 	[fre, 0]
+ * 	[spa, 0]
+ * 	[spa, 4] *
+ * }
+ * Response : {
+ * 	[fre, 7] *
+ * 	[spa, 0]
+ * 	[spa, 4]
+ * }
+ * </pre>
  * 
+ * @author dvilleneuve
  */
 public class BestRateSelector implements Selector {
 
 	public SubtitleResult selectOne(List<SubtitleResult> subtitleResults) {
+		// TODO: Filter with languages order
+		
 		if (subtitleResults != null && subtitleResults.size() > 0) {
 			SubtitleResult bestResult = subtitleResults.get(0);
 
@@ -31,5 +51,5 @@ public class BestRateSelector implements Selector {
 		}
 		return null;
 	}
-	
+
 }
