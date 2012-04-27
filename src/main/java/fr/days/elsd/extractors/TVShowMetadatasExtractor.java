@@ -1,6 +1,9 @@
 package fr.days.elsd.extractors;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -11,8 +14,12 @@ import fr.days.elsd.model.metadatas.TVShowMetadatas;
 public class TVShowMetadatasExtractor {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TVShowMetadatasExtractor.class);
-	protected final static Pattern filenameSeasonEpisodePattern = Pattern
-			.compile("[sS]?0?([1-2][0-9]|[1-9])[\\[\\]_.-]{0,4}[eExX_.-]?0?(\\d{1,2})");
+
+	private final static Pattern filenameSeasonEpisodePattern = Pattern.compile("s?(0?[1-2][0-9]|0?[1-9])" //
+			+ "[\\[\\]_.-]{0,4}" //
+			+ "[ex_.-]?(0?[1-2][0-9]|0?[1-9])", Pattern.CASE_INSENSITIVE);
+	private final static Pattern filenameSeasonNamePattern = Pattern.compile("[._-]*([a-z]+(?:[._-][a-z]+)*)[._-]*",
+			Pattern.CASE_INSENSITIVE);
 
 	public TVShowMetadatas extractMetadatas(File video) {
 		LOGGER.debug("Try to extract metadatas from '" + video.getPath() + "'");
@@ -20,11 +27,16 @@ public class TVShowMetadatasExtractor {
 		TVShowMetadatas pathMetadatas = extractMetadatasFromPath(video);
 		TVShowMetadatas fileMetadatas = extractMetadatasFromFileName(video);
 
-		// TODO: Merge the to TVShowMetadatas instances
+		if (pathMetadatas != null && fileMetadatas != null) {
 
-		TVShowMetadatas metadatas = new TVShowMetadatas(video);
+			// TODO: Merge the to TVShowMetadatas instances
 
-		return metadatas;
+		} else if (pathMetadatas != null) {
+			return pathMetadatas;
+		} else if (fileMetadatas != null) {
+			return fileMetadatas;
+		}
+		return null;
 	}
 
 	/**
@@ -34,11 +46,9 @@ public class TVShowMetadatasExtractor {
 	 * @return a FileMetadatas instance
 	 */
 	public TVShowMetadatas extractMetadatasFromPath(File video) {
-		TVShowMetadatas metaDatas = new TVShowMetadatas(video);
-
 		// TODO Find a regexp to extract metadata from path
 
-		return metaDatas;
+		return null;
 	}
 
 	/**
@@ -49,10 +59,28 @@ public class TVShowMetadatasExtractor {
 	 */
 	public TVShowMetadatas extractMetadatasFromFileName(File video) {
 		TVShowMetadatas metaDatas = new TVShowMetadatas(video);
+		String filename = video.getName();
 
-		// TODO Find a regexp to extract metadata from filename
+		// Extract season and episode numbers
+		Matcher matcher = filenameSeasonEpisodePattern.matcher(filename);
+		if (matcher.find()) {
+			metaDatas.setSeasonNumber(Integer.parseInt(matcher.group(1)));
+			metaDatas.setEpisodeNumber(Integer.parseInt(matcher.group(2)));
+
+			filename = filename.replace(matcher.group(), "");
+		}
+
+		// Extract names
+		matcher = filenameSeasonNamePattern.matcher(filename);
+		List<String> names = new ArrayList<String>();
+		while (matcher.find()) {
+			names.add(matcher.group(1));
+			filename = filename.replace(matcher.group(), "");
+		}
+		if (names.size() > 0) {
+			metaDatas.setShowName(names.get(0));
+		}
 
 		return metaDatas;
 	}
-
 }

@@ -6,8 +6,8 @@ import java.util.Date;
 public class TVShowMetadatas extends FileMetadatas {
 	private String showName;
 	private String episodeName;
-	private int episodeNumber;
 	private int seasonNumber;
+	private int episodeNumber;
 	private Date releaseDate;
 
 	public TVShowMetadatas(File sourceFile) {
@@ -59,10 +59,8 @@ public class TVShowMetadatas extends FileMetadatas {
 
 	@Override
 	public String toString() {
-		return "TVShowMetadatas [showName=" + showName + ", episodeName=" + episodeName + ", episodeNumber="
-				+ episodeNumber + ", seasonNumber=" + seasonNumber + ", releaseDate=" + releaseDate
-				+ ", getSourceFile()=" + getSourceFile() + ", getQuality()=" + getQuality() + ", getTeamName()="
-				+ getTeamName() + ", getLanguage()=" + getLanguage() + "]";
+		return "TVShowMetadatas [showName=" + showName + ", episodeName=" + episodeName + ", seasonNumber="
+				+ seasonNumber + ", episodeNumber=" + episodeNumber + ", releaseDate=" + releaseDate + "]";
 	}
 
 	public String getShowName() {
@@ -81,20 +79,20 @@ public class TVShowMetadatas extends FileMetadatas {
 		this.episodeName = episodeName;
 	}
 
-	public int getEpisodeNumber() {
-		return episodeNumber;
-	}
-
-	public void setEpisodeNumber(int episodeNumber) {
-		this.episodeNumber = episodeNumber;
-	}
-
 	public int getSeasonNumber() {
 		return seasonNumber;
 	}
 
 	public void setSeasonNumber(int seasonNumber) {
 		this.seasonNumber = seasonNumber;
+	}
+
+	public int getEpisodeNumber() {
+		return episodeNumber;
+	}
+
+	public void setEpisodeNumber(int episodeNumber) {
+		this.episodeNumber = episodeNumber;
 	}
 
 	public Date getReleaseDate() {
