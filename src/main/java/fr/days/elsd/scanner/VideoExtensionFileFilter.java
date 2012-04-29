@@ -22,10 +22,11 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class VideoExtensionFileFilter implements FileFilter {
+	
 	private final static Logger LOGGER = LoggerFactory.getLogger(VideoExtensionFileFilter.class);
 
-	public static String SUBTITLE_EXTENSIONS = "srt";
-	public static String[] VALID_EXTENSIONS = new String[] { "3g2", "3gp", "3gp2", "3gpp", "60d", "ajp", "asf", "asx",
+	private final static String SUBTITLE_EXTENSION = "srt";
+	private final static String[] VALID_EXTENSIONS = new String[] { "3g2", "3gp", "3gp2", "3gpp", "60d", "ajp", "asf", "asx",
 			"avchd", "avi", "bik", "bix", "box", "cam", "dat", "divx", "dmf", "dv", "dvr-ms", "evo", "flc", "fli",
 			"flic", "flv", "flx", "gvi", "gvp", "h264", "m1v", "m2p", "m2ts", "m2v", "m4e", "m4v", "mjp", "mjpeg",
 			"mjpg", "mkv", "moov", "mov", "movhd", "movie", "movx", "mp4", "mpe", "mpeg", "mpg", "mpv", "mpv2", "mxf",
@@ -44,7 +45,7 @@ public class VideoExtensionFileFilter implements FileFilter {
 			return false;
 		if (!videoFile.isFile())
 			return false;
-		
+
 		String videoName = videoFile.getName();
 		int extensionIndex = videoName.lastIndexOf('.');
 		if (extensionIndex == -1)
@@ -54,7 +55,7 @@ public class VideoExtensionFileFilter implements FileFilter {
 		for (String validExtension : VALID_EXTENSIONS) {
 			if (extension.equalsIgnoreCase(validExtension)) {
 				if (withoutSubtitle) {
-					File subtitleFile = getSubtitleForVideo(videoFile);
+					File subtitleFile = FolderScanner.getAssociatedFile(videoFile, SUBTITLE_EXTENSION);
 					if (subtitleFile != null) {
 						LOGGER.trace(videoName + " has already a subtitle file... Skipped");
 						return false;
@@ -64,32 +65,6 @@ public class VideoExtensionFileFilter implements FileFilter {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * This method is looking for a subtitle according to a video.
-	 * 
-	 * @param videoFile
-	 * @return a file instance representing the subitle, or <code>null</code> if no subtitle was found.
-	 */
-	private File getSubtitleForVideo(File videoFile) {
-		if (videoFile == null)
-			return null;
-		if (!videoFile.isFile())
-			return null;
-
-		String videoPath = videoFile.getAbsolutePath();
-		int extensionIndex = videoPath.lastIndexOf('.');
-		if (extensionIndex == -1)
-			return null;
-
-		String subtitlePath = videoPath.substring(0, extensionIndex + 1) + SUBTITLE_EXTENSIONS;
-		File subtitleFile = new File(subtitlePath);
-
-		if (subtitleFile.exists()) {
-			return subtitleFile;
-		}
-		return null;
 	}
 
 	public boolean isWithoutSubtitle() {

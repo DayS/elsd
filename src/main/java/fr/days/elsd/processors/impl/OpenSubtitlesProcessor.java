@@ -98,12 +98,17 @@ public class OpenSubtitlesProcessor implements Processor {
 			paramsQuery.put("episode", String.valueOf(metadatas.getEpisodeNumber()));
 		}
 
-		// Extract imdb from .NFO
-		// /imdb\.[^\/]+\/title\/tt(\d+)/i
-		// Map<String, String> paramsIMDB = new HashMap<String, String>();
-		// paramsIMDB.put("imdbid", imdbId);
+		Object[] datas;
+		if (metadatas.getImdbid() != 0) {
+			Map<String, String> paramsImdb = new HashMap<String, String>();
+			paramsHash.put("sublanguageid", languagesString);
+			paramsHash.put("imdbid", String.valueOf(metadatas.getImdbid()));
 
-		Object[] datas = new Object[] { loginTicket, new Object[] { paramsHash }, new Object[] { paramsQuery } };
+			datas = new Object[] { loginTicket, new Object[] { paramsHash }, new Object[] { paramsQuery },
+					new Object[] { paramsImdb } };
+		} else {
+			datas = new Object[] { loginTicket, new Object[] { paramsHash }, new Object[] { paramsQuery } };
+		}
 		Object[] results = callRPCToArray("SearchSubtitles", datas);
 
 		if (results != null) {

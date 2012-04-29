@@ -23,4 +23,32 @@ public class FolderScanner {
 		}
 		return null;
 	}
+
+	/**
+	 * This method is looking for a file associated to a source file. The filename is used to make a link between the
+	 * two files.
+	 * 
+	 * @param sourceFile
+	 * @param extensionToSearch
+	 * @return a file instance representing the associated file, or <code>null</code> if no file was found.
+	 */
+	public static File getAssociatedFile(File sourceFile, String extensionToSearch) {
+		if (sourceFile == null)
+			return null;
+		if (!sourceFile.isFile())
+			return null;
+
+		String videoPath = sourceFile.getAbsolutePath();
+		int extensionIndex = videoPath.lastIndexOf('.');
+		if (extensionIndex == -1)
+			return null;
+
+		String subtitlePath = videoPath.substring(0, extensionIndex + 1) + extensionToSearch;
+		File subtitleFile = new File(subtitlePath);
+
+		if (subtitleFile.exists()) {
+			return subtitleFile;
+		}
+		return null;
+	}
 }
