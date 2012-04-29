@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.metadatas.TVShowMetadatas;
 
-public class TVShowMetadatasExtractor {
+public class TVShowMetadatasExtractor implements MetadatasExtractor {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TVShowMetadatasExtractor.class);
 
@@ -21,6 +21,7 @@ public class TVShowMetadatasExtractor {
 	private final static Pattern filenameSeasonNamePattern = Pattern.compile("[._-]*([a-z]+(?:[._-][a-z]+)*)[._-]*",
 			Pattern.CASE_INSENSITIVE);
 
+	@Override
 	public TVShowMetadatas extractMetadatas(File video) {
 		LOGGER.debug("Try to extract metadatas from '" + video.getPath() + "'");
 

@@ -7,7 +7,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.days.elsd.extractors.MetadatasExtractor;
+import fr.days.elsd.extractors.TVShowMetadatasExtractor;
 import fr.days.elsd.model.SubtitleResult;
+import fr.days.elsd.model.metadatas.TVShowMetadatas;
 import fr.days.elsd.selector.BestRateSelector;
 import fr.days.elsd.selector.Selector;
 
@@ -22,6 +25,7 @@ public class ProcessorManager {
 
 	private final List<Processor> processors = new ArrayList<Processor>();
 	private Selector subtitleSelector = new BestRateSelector();
+	private MetadatasExtractor metadatasExtractor = new TVShowMetadatasExtractor();
 	private String[] languages;
 
 	public ProcessorManager(String... languages) {
@@ -39,12 +43,14 @@ public class ProcessorManager {
 			throw new IllegalArgumentException("You have to specify an existing video file");
 		}
 
+		TVShowMetadatas metadatas = metadatasExtractor.extractMetadatas(video);
+
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		// Search subtitles with every processors
 		for (Processor processor : processors) {
 			LOGGER.info("# Using {}", processor.getClass().getSimpleName());
-			List<SubtitleResult> searchSubtitles = processor.searchSubtitles(video, languages);
+			List<SubtitleResult> searchSubtitles = processor.searchSubtitles(metadatas, languages);
 			subtitles.addAll(searchSubtitles);
 		}
 

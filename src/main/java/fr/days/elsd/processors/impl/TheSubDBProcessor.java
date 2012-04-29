@@ -23,6 +23,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import fr.days.elsd.model.SubtitleResult;
+import fr.days.elsd.model.metadatas.TVShowMetadatas;
 import fr.days.elsd.processors.Processor;
 
 public class TheSubDBProcessor implements Processor {
@@ -36,7 +37,8 @@ public class TheSubDBProcessor implements Processor {
 	}
 
 	@Override
-	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
+	public List<SubtitleResult> searchSubtitles(TVShowMetadatas metadatas, String[] languages) {
+		File video = metadatas.getSourceFile();
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		if (video == null)

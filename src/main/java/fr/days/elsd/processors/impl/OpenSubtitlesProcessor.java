@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.days.elsd.model.SubtitleResult;
+import fr.days.elsd.model.metadatas.TVShowMetadatas;
 import fr.days.elsd.processors.Processor;
 
 public class OpenSubtitlesProcessor implements Processor {
@@ -50,7 +51,8 @@ public class OpenSubtitlesProcessor implements Processor {
 	}
 
 	@Override
-	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
+	public List<SubtitleResult> searchSubtitles(TVShowMetadatas metadatas, String[] languages) {
+		File video = metadatas.getSourceFile();
 		if (video == null || !video.isFile()) {
 			throw new IllegalArgumentException("You have to specify an existing video file");
 		}
@@ -91,6 +93,10 @@ public class OpenSubtitlesProcessor implements Processor {
 		Map<String, String> paramsQuery = new HashMap<String, String>();
 		paramsQuery.put("sublanguageid", languagesString);
 		paramsQuery.put("query", basename);
+		if (metadatas.getSeasonNumber() != 0 && metadatas.getEpisodeNumber() != 0) {
+			paramsQuery.put("season", String.valueOf(metadatas.getSeasonNumber()));
+			paramsQuery.put("episode", String.valueOf(metadatas.getEpisodeNumber()));
+		}
 
 		// Extract imdb from .NFO
 		// /imdb\.[^\/]+\/title\/tt(\d+)/i
@@ -109,7 +115,7 @@ public class OpenSubtitlesProcessor implements Processor {
 				String imdbId = (String) resultCast.get("IDMovieImdb");
 				String hash = (String) resultCast.get("MovieHash");
 				String name = (String) resultCast.get("MovieName");
-				String language = (String)resultCast.get("SubLanguageID");
+				String language = (String) resultCast.get("SubLanguageID");
 				int season = Integer.valueOf((String) resultCast.get("SeriesSeason"));
 				int episode = Integer.valueOf((String) resultCast.get("SeriesEpisode"));
 				String link = (String) resultCast.get("SubDownloadLink");

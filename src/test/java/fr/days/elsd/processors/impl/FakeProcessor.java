@@ -6,11 +6,11 @@
  */
 package fr.days.elsd.processors.impl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.days.elsd.model.SubtitleResult;
+import fr.days.elsd.model.metadatas.TVShowMetadatas;
 import fr.days.elsd.processors.Processor;
 
 /**
@@ -20,7 +20,7 @@ import fr.days.elsd.processors.Processor;
 public class FakeProcessor implements Processor {
 
 	@Override
-	public List<SubtitleResult> searchSubtitles(File video, String[] languages) {
+	public List<SubtitleResult> searchSubtitles(TVShowMetadatas metadatas, String[] languages) {
 		List<SubtitleResult> subtitles = new ArrayList<SubtitleResult>();
 
 		subtitles.add(new SubtitleResult(FakeProcessor.class, "12345", "7c0100307de11000002078031000c00d",

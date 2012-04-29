@@ -54,7 +54,7 @@ public class ProcessorManagerTest {
 	public void searchFirstResultTest() {
 		SubtitleResult searchSubtitle = processorManager.searchSubtitle(video);
 		SubtitleResult expectedSubtitle = new SubtitleResult(FakeProcessor.class, "12345",
-				"Falling Skies - s01e04.srt", "7c0100307de11000002078031000c00d", "Falling Skies", "fre", 1, 4,
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4,
 				"http://localhost/dl.zip", "ZIP", "sub-1234", 5.0f);
 
 		Assert.assertEquals(expectedSubtitle, searchSubtitle);
@@ -65,7 +65,7 @@ public class ProcessorManagerTest {
 		processorManager.setSubtitleSelector(new BestRateSelector());
 		SubtitleResult searchSubtitle = processorManager.searchSubtitle(video);
 		SubtitleResult expectedSubtitle = new SubtitleResult(FakeProcessorBestResult.class, "12345",
-				"Falling Skies - s01e04.srt", "7c0100307de11000002078031000c00d", "Falling Skies", "fre", 1, 4,
+				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4,
 				"http://localhost/dl.zip", "ZIP", "sub-7654", 10.0f);
 
 		Assert.assertEquals(expectedSubtitle, searchSubtitle);
