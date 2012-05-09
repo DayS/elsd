@@ -12,13 +12,13 @@ public class SubtitleResult {
 	private final int season;
 	private final int episode;
 	private final String url;
-	private final String urlType;
+	private final FileTypeEnum urlType;
 	private final String subLanguageID;
 	private final float subRating;
 
 	public SubtitleResult(Class<? extends Processor> processor, String imdbId, String hash, String filename,
-			String name, String language, int season, int episode, String url, String urlType, String subLanguageID,
-			float subRating) {
+			String name, String language, int season, int episode, String url, FileTypeEnum urlType,
+			String subLanguageID, float subRating) {
 		super();
 		this.processor = processor;
 		this.imdbId = imdbId;
@@ -160,7 +160,7 @@ public class SubtitleResult {
 		return url;
 	}
 
-	public String getUrlType() {
+	public FileTypeEnum getUrlType() {
 		return urlType;
 	}
 

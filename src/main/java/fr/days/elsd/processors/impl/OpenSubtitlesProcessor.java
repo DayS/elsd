@@ -22,6 +22,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.days.elsd.model.FileTypeEnum;
 import fr.days.elsd.model.SubtitleResult;
 import fr.days.elsd.model.metadatas.TVShowMetadatas;
 import fr.days.elsd.processors.Processor;
@@ -128,7 +129,7 @@ public class OpenSubtitlesProcessor implements Processor {
 				String subLanguageID = (String) resultCast.get("SubLanguageID");
 
 				SubtitleResult subtitle = new SubtitleResult(getClass(), imdbId, hash, subtitleFileName, name,
-						language, season, episode, link, "ZIP", subLanguageID, subRating);
+						language, season, episode, link, FileTypeEnum.GZ, subLanguageID, subRating);
 				subtitles.add(subtitle);
 			}
 		}

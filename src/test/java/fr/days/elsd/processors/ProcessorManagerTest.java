@@ -12,8 +12,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import fr.days.elsd.model.FileTypeEnum;
 import fr.days.elsd.model.SubtitleResult;
-import fr.days.elsd.processors.ProcessorManager;
 import fr.days.elsd.processors.impl.FakeProcessor;
 import fr.days.elsd.processors.impl.FakeProcessorBestResult;
 import fr.days.elsd.processors.impl.FakeProcessorNoResults;
@@ -55,7 +55,7 @@ public class ProcessorManagerTest {
 		SubtitleResult searchSubtitle = processorManager.searchSubtitle(video);
 		SubtitleResult expectedSubtitle = new SubtitleResult(FakeProcessor.class, "12345",
 				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4,
-				"http://localhost/dl.zip", "ZIP", "sub-1234", 5.0f);
+				"http://localhost/dl.zip", FileTypeEnum.ZIP, "sub-1234", 5.0f);
 
 		Assert.assertEquals(expectedSubtitle, searchSubtitle);
 	}
@@ -66,7 +66,7 @@ public class ProcessorManagerTest {
 		SubtitleResult searchSubtitle = processorManager.searchSubtitle(video);
 		SubtitleResult expectedSubtitle = new SubtitleResult(FakeProcessorBestResult.class, "12345",
 				"7c0100307de11000002078031000c00d", "Falling Skies - s01e04.srt", "Falling Skies", "fre", 1, 4,
-				"http://localhost/dl.zip", "ZIP", "sub-7654", 10.0f);
+				"http://localhost/dl.zip", FileTypeEnum.ZIP, "sub-7654", 10.0f);
 
 		Assert.assertEquals(expectedSubtitle, searchSubtitle);
 	}
