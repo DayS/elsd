@@ -67,42 +67,47 @@ public class Elsd {
 
 			if (line.hasOption("h")) {
 				printHelp();
-				System.exit(0);
-			} else {
-				if (line.hasOption("l")) {
-					processorManager.setLanguages(line.getOptionValues("l"));
+				return;
+			}
+
+			if (line.hasOption("l")) {
+				processorManager.setLanguages(line.getOptionValues("l"));
+			}
+			if (line.hasOption("s")) {
+				String selector = line.getOptionValue("s");
+				if ("first".equalsIgnoreCase(selector)) {
+					processorManager.setSubtitleSelector(new FirstSelector());
+				} else if ("rate".equalsIgnoreCase(selector)) {
+					processorManager.setSubtitleSelector(new BestRateSelector());
+				} else {
+					throw new ParseException("Please use on these value for the subtitle selector : first, rate");
 				}
-				if (line.hasOption("s")) {
-					String selector = line.getOptionValue("s");
-					if ("first".equalsIgnoreCase(selector)) {
-						processorManager.setSubtitleSelector(new FirstSelector());
-					} else if ("rate".equalsIgnoreCase(selector)) {
-						processorManager.setSubtitleSelector(new BestRateSelector());
+			}
+			if (line.hasOption("f")) {
+				String[] optionValues = line.getOptionValues("f");
+				for (String optionValue : optionValues) {
+					File file = new File(optionValue);
+					if (file.exists()) {
+						filesToProcess.add(file);
 					} else {
-						System.err.println("Please use on these value for the subtitle selector : first, rate");
-					}
-				}
-				if (line.hasOption("f")) {
-					String[] optionValues = line.getOptionValues("f");
-					for (String optionValue : optionValues) {
-						File file = new File(optionValue);
-						if (file.exists()) {
-							filesToProcess.add(file);
-						}
+						LOGGER.warn("This file doesn't exists : " + file.getName());
 					}
 				}
 			}
 
 		} catch (MissingOptionException e) {
-			System.err.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 			printHelp();
+			return;
 
 		} catch (MissingArgumentException e) {
-			System.err.println(e.getMessage());
+			LOGGER.error(e.getMessage());
 			printHelp();
+			return;
 
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOGGER.error("Parsing error: " + e.getMessage());
+			return;
 		}
 
 		LOGGER.info("Elsd configuration :");
@@ -156,6 +161,7 @@ public class Elsd {
 				.withDescription(
 						"list of files to process. each file can be a video file or a directory to scan. The scanner will search any videos files without associated subtitle")
 				.withLongOpt("files").create("f"));
+
 		return options;
 	}
 
