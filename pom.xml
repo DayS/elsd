@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.days</groupId>
 	<artifactId>elsd</artifactId>
-	<version>0.1</version>
+	<version>0.2-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
 		<url>https://github.com/DayS/elsd</url>
 		<connection>scm:git:ssh://git@github.com/DayS/elsd.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/DayS/elsd.git</developerConnection>
-		<tag>v0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
