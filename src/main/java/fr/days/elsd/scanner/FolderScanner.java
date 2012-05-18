@@ -13,11 +13,13 @@ public class FolderScanner {
 	 * 
 	 * @param folder
 	 *            The folder and his sub-folders to scan.
+	 * @param withoutSubtitle
+	 *            true to find videos without subtitles associated, false to find all videos
 	 * @return an array of File instances representing videos whithout subtitles or an empty array.
 	 */
-	public static File[] findVideosInFolder(File folder) {
+	public static File[] findVideosInFolder(File folder, boolean withoutSubtitle) {
 		try {
-			return folder.listFiles(new VideoExtensionFileFilter(true));
+			return folder.listFiles(new VideoExtensionFileFilter(withoutSubtitle));
 		} catch (SecurityException e) {
 			LOGGER.error("Can't found any video files", e);
 		}

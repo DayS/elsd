@@ -46,6 +46,8 @@ public class Elsd {
 	private final HelpFormatter helpFormatter;
 	private final Options options;
 
+	private boolean override = false;
+
 	public static void main(String[] args) {
 		new Elsd(args);
 	}
@@ -73,16 +75,6 @@ public class Elsd {
 			if (line.hasOption("l")) {
 				processorManager.setLanguages(line.getOptionValues("l"));
 			}
-			if (line.hasOption("s")) {
-				String selector = line.getOptionValue("s");
-				if ("first".equalsIgnoreCase(selector)) {
-					processorManager.setSubtitleSelector(new FirstSelector());
-				} else if ("rate".equalsIgnoreCase(selector)) {
-					processorManager.setSubtitleSelector(new BestRateSelector());
-				} else {
-					throw new ParseException("Please use on these value for the subtitle selector : first, rate");
-				}
-			}
 			if (line.hasOption("f")) {
 				String[] optionValues = line.getOptionValues("f");
 				for (String optionValue : optionValues) {
@@ -93,6 +85,19 @@ public class Elsd {
 						LOGGER.warn("This file doesn't exists : " + file.getName());
 					}
 				}
+			}
+			if (line.hasOption("s")) {
+				String selector = line.getOptionValue("s");
+				if ("first".equalsIgnoreCase(selector)) {
+					processorManager.setSubtitleSelector(new FirstSelector());
+				} else if ("rate".equalsIgnoreCase(selector)) {
+					processorManager.setSubtitleSelector(new BestRateSelector());
+				} else {
+					throw new ParseException("Please use on these value for the subtitle selector : first, rate");
+				}
+			}
+			if (line.hasOption("o")) {
+				override = true;
 			}
 
 		} catch (MissingOptionException e) {
@@ -114,17 +119,18 @@ public class Elsd {
 		LOGGER.info("* Searching languages : {}", (Object) processorManager.getLanguages());
 		LOGGER.info("* Subtitle selector : {}", processorManager.getSubtitleSelector().getClass().getSimpleName());
 		LOGGER.info("* Files to process : {}", (Object) filesToProcess);
+		LOGGER.info("* Subtitles overriding : {}", override ? "yes" : "no");
 
 		for (File fileToProcess : filesToProcess) {
 			if (fileToProcess.isDirectory()) {
 				LOGGER.info("Scanning folder : {}", fileToProcess);
 
 				// Scan videos folder
-				File[] videos = FolderScanner.findVideosInFolder(fileToProcess);
+				File[] videos = FolderScanner.findVideosInFolder(fileToProcess, !override);
 				if (videos == null || videos.length == 0) {
 					LOGGER.warn("No videos found");
 				} else {
-					LOGGER.info("Found " + videos.length + " videos whithout subtitles");
+					LOGGER.info("Found " + videos.length + " videos " + (override ? "" : "whithout subtitles"));
 					for (File video : videos) {
 						processFile(video);
 					}
@@ -148,12 +154,6 @@ public class Elsd {
 						"ordered list of languages for the subtitles. Each language is ISO-639-3 formated (3 characters)")
 				.withLongOpt("languages").create("l"));
 		options.addOption(OptionBuilder
-				.hasArg()
-				.withArgName("first|rate")
-				.withDescription(
-						"selector strategy to select the best subtitle among all downloaded subtitles. 'rate' selector use users rating and 'first' will just pick the first subtitle found. Default is 'rate'")
-				.withLongOpt("selector").create("s"));
-		options.addOption(OptionBuilder
 				.isRequired()
 				.hasArgs()
 				.withArgName("file,...")
@@ -161,6 +161,14 @@ public class Elsd {
 				.withDescription(
 						"list of files to process. each file can be a video file or a directory to scan. The scanner will search any videos files without associated subtitle")
 				.withLongOpt("files").create("f"));
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("first|rate")
+				.withDescription(
+						"selector strategy to select the best subtitle among all downloaded subtitles. 'rate' selector use users rating and 'first' will just pick the first subtitle found. Default is 'rate'")
+				.withLongOpt("selector").create("s"));
+		options.addOption(OptionBuilder.withDescription("If this option is set, existing subtitles will be overrided")
+				.withLongOpt("override").create("o"));
 
 		return options;
 	}
