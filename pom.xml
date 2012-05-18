@@ -94,9 +94,11 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<finalName>elsd-${project.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
-							<mainClass>fr.days.elsd.Main</mainClass>
+							<mainClass>fr.days.elsd.Elsd</mainClass>
 							<packageName>fr.days.elsd</packageName>
 							<addClasspath>true</addClasspath>
 						</manifest>
