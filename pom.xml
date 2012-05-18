@@ -33,13 +33,6 @@
 		</developer>
 	</developers>
 
-	<repositories>
-		<repository>
-			<id>tmate</id>
-			<url>http://maven.tmatesoft.com/content/repositories/releases</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.xmlrpc</groupId>
@@ -50,12 +43,6 @@
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey-client.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.tmatesoft.sqljet</groupId>
-			<artifactId>sqljet</artifactId>
-			<version>${sqljet.version}</version>
 		</dependency>
 
 		<dependency>
@@ -107,7 +94,6 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<!-- <finalName>elsd-1.0.jar</finalName> -->
 					<archive>
 						<manifest>
 							<mainClass>fr.days.elsd.Main</mainClass>
